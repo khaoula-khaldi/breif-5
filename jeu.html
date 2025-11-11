@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu de Cartes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/script.js" defer></script>
+  <style>
+    body {
+      background-image: url('img/jeu.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+
+<body class="h-screen text-white">
+
+  <!-- HEADER -->
+  <header
+    class="bg-[#fffdf622] flex flex-col md:flex-row justify-between items-center p-4 md:p-6 mb-10 rounded-3xl space-y-3 md:space-y-0 mt-10">
+    <div class="text-white font-bold text-xl">LOGO / Marché</div>
+    <nav>
+      <ul class="flex flex-wrap justify-center gap-3 md:gap-6 text-sm md:text-base w-full">
+        <li><a href="index.html" class="hover:underline">Accueil</a></li>
+        <li><a href="guide.html" class="hover:underline">Guide</a></li>
+        <li><a href="marcher.html" class="hover:underline">Marché</a></li>
+        <li><a href="mon_dek.html" class="hover:underline">Mon deck</a></li>
+        <li><a href="jeu.html" class="hover:underline">Jeu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN GRID -->
+  <main class="h-full p-5 grid grid-cols-[1fr_2fr] grid-rows-[auto_1fr_auto] gap-6">
+
+    <!-- Zone Deck (gauche) -->
+    <div id="deckZone" class="border border-gray-700 rounded-lg p-3 bg-gray-800 row-span-3">
+      <h2 class="text-lg font-semibold mb-2">Zone de Deck</h2>
+      <div id="cartesDeck" class="grid grid-cols-1 overflow-y-auto gap-2 h-[95%] ml-20"></div>
+      <p class="mt-2 text-sm">Nombre de cartes : <span id="nbr-Cards">0</span></p>
+    </div>
+
+    <!-- Zone Adversaire (en haut à droite) -->
+    <div id="zoneAdversaire" class="border border-gray-700 rounded-lg p-3 bg-gray-800 ">
+      <h2 class="text-lg font-semibold mb-2">Adversaire</h2>
+      <div id="cartesAdversaire" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <!-- Champ de Bataille (milieu droite) -->
+    <div id="BatailleJoueur"class="border border-gray-700 rounded-lg p-3 bg-gray-800 grid grid-rows-4 grid-cols-5 gap-2">
+      <h2 class="text-lg font-semibold mb-2">Champ de Bataille</h2>
+      <div class="absolute gap-4">
+      <!-- Zone adversaire -->
+      <div class="adversaire flex flex-row border border-solid-[#ccc] h-[150px] w-[50rem] mt-10 ml-20 " >  </div>
+      <!-- Zone joueur -->
+      <div class="joueur flex flex-row border border-solid-[#ccc] h-[150px]  w-[50rem] ml-20 " >  </div>
+    </div>
+    </div>
+    <!-- Main du joueur (bas droite) -->
+    <div id="mainZone" class="border border-gray-700 rounded-lg p-3 bg-gray-800 col-span-1">
+      <h2 class="text-lg font-semibold mb-2">Ta main</h2>
+      <div id="cartesMain" class="flex flex-wrap gap-2 min-h-[120px]"></div>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

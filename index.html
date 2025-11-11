@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Hearthstone</title>
+</head>
+
+<style>
+  body {
+    background-image: url(img/jeu.png);
+  }
+</style>
+
+<body class="bg-cover bg-center min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-[#fffdf622] flex flex-col md:flex-row justify-between items-center p-4 md:p-6 text-white mb-10 rounded-3xl space-y-3 md:space-y-0 mt-10">
+    <div class="text-white font-bold text-xl">LOGO / Marché</div>
+    <nav>
+      <ul class="flex flex-wrap justify-center gap-3 md:gap-6 text-sm md:text-base w-full">
+        <li><a href="index.html" class="hover:underline">Accueil</a></li>
+        <li><a href="guide.html" class="hover:underline">Guide</a></li>
+        <li><a href="marcher.html" class="hover:underline">Marché</a></li>
+        <li><a href="mon_dek.html" class="hover:underline">Mon deck</a></li>
+        <li><a href="jeu.html" class="hover:underline"> jeu</a></li>
+    
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="space-y-12 px-4 md:px-20">
+    <h1 class="text-2xl md:text-3xl font-semibold text-center" style="color: #B44545;">
+      Blizzard dévoile les chances d’obtenir une carte dorée sur Hearthstone 
+    </h1>
+
+    <div class="flex justify-center">
+      <img src="img/pngegg.png" alt="en cours" class="w-full max-w-md mx-auto">
+    </div>
+
+    <!-- Présentation -->
+    <p class="font-semibold text-white text-center md:text-justify px-4 md:px-60">
+      Hearthstone est un jeu de cartes à collectionner numérique en ligne, gratuit, développé par Blizzard Entertainment
+      et basé sur l'univers de Warcraft. Les joueurs s'affrontent en duel, constituant un deck de 30 cartes pour
+      invoquer des serviteurs et lancer des sorts. Les joueurs peuvent choisir parmi plusieurs héros, chacun ayant des
+      cartes et un pouvoir unique.
+    </p>
+
+    <!-- Boutons -->
+    <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-20">
+      <a href="Guide.html"
+         class="bg-[#b7c38e] text-[#171716] font-semibold px-6 py-2 rounded-3xl shadow hover:scale-105 transition text-center">
+        Guide
+      </a>
+      <a href="marche.html"
+         class="bg-[#b7c38e] text-[#171716] font-semibold px-6 py-2 rounded-3xl shadow hover:scale-105 transition text-center">
+        Marché
+      </a>
+    </div>
+  </main>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class=" text-white [#17171670] px-8 py-12 mt-16 rounded-3xl flex flex-col md:flex-row justify-between gap-10">
+    <div>
+      <h2 class="font-bold text-lg mb-2">ChronoDeck</h2>
+      <p class="text-sm">
+        Plongez dans l’univers des cartes digitales à collectionner.<br>
+        Créez votre deck, échangez et vivez une expérience unique entre stratégie et rareté.
+      </p>
+    </div>
+    <div>
+      <h2 class="font-bold text-lg mb-2">Explorer</h2>
+      <p class="text-sm">
+        Accueil<br>
+        Guide du jeu<br>
+        Marché<br>
+        Mon Deck<br>
+        Favoris<br>
+        Panier
+      </p>
+    </div>
+    <div>
+      <h2 class="font-bold text-lg mb-2">Bas de page</h2>
+      <p class="text-sm">
+        © 2025 ChronoDeck.<br>
+        Tous droits réservés.<br>
+        Design réalisé par Khaoula Khaldi.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
