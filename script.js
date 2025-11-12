@@ -214,19 +214,25 @@ async function FetchCarte() {
 FetchCarte()
 
 
-//les zones
+
+
+// //les zones===============================================================================================================================================
+
+// Sélectionner les zones
 const playerHandContainer = document.getElementById("cartesMain");
 const deckContainer = document.getElementById("cartesDeck");
+const deckJoueur =document.querySelector(".deckJoueur")
+
 let draggedItem = null;
 
-// Fonction pour afficher les cartes du deck dans la zone deeck
+// Fonction pour afficher les cartes du deck dans la zone deck
 function afficherDeckDansJeu() {
   const cartesAchetees = JSON.parse(localStorage.getItem("cartesAchetees")) || [];
-  deckContainer.innerHTML = ""; // khaweeee 9beel 
+  deckContainer.innerHTML = ""; // khweeeeeeeeeeee fi lwel
 
   cartesAchetees.forEach(carte => {
     const cardDiv = document.createElement("div");
-    cardDiv.className = "carteDeck w-[150px] h-[100px] bg-gray-700 text-white rounded p-2 m-2";
+    cardDiv.className = "carteDeck w-[150px] h-[150px] bg-gray-700 text-white rounded p-2 m-2";
     cardDiv.id = `card-${carte.id}`;
     cardDiv.setAttribute("draggable", "true");
     cardDiv.innerHTML = `
@@ -234,95 +240,80 @@ function afficherDeckDansJeu() {
       <h3 class="text-sm font-bold">${carte.name}</h3>
       <p class="text-xs">${carte.rare}</p>
     `;
-
-    // Drag event
-    cardDiv.addEventListener('dragstart', (e) => {
-      draggedItem = e.target;
-      e.target.classList.add('opacity-50');
-    });
-    cardDiv.addEventListener('dragend', (e) => {
-      e.target.classList.remove('opacity-50');
-      draggedItem = null;
-    });
-
     deckContainer.appendChild(cardDiv);
   });
 
-  // kathseeeb ch7aal kyen mn carte 
-  const nbrCards = document.getElementById("nbr-Cards");
-  if (nbrCards) nbrCards.textContent = cartesAchetees.length;
+
+
+  // drag sur chque carte
+  const cartesDeck = document.querySelectorAll(".carteDeck");
+  cartesDeck.forEach(carte => {
+    carte.addEventListener("dragstart", e => {
+      draggedItem = carte;
+      carte.classList.add("dragging");
+      console.log("drag start");
+    });
+
+    carte.addEventListener("dragend", e => {
+      carte.classList.remove("dragging");
+      draggedItem = null;
+      console.log("drag end");
+    });
+  });
+    // drag sur chque carte dans main
+  const cartesMain = document.getElementById("cartesMain");
+  cartesMain.forEach(carte => {
+    carte.addEventListener("dragstart", e => {
+      draggedItem = carte;
+      carte.classList.add("dragging");
+      console.log("drag start");
+    });
+
+    carte.addEventListener("dragend", e => {
+      carte.classList.remove("dragging");
+      draggedItem = null;
+      console.log("drag end");
+    });
+  });
+
 }
 
-//  drop sur la main
-playerHandContainer.addEventListener('dragover', (e) => {
-  e.preventDefault();
-});
-
-playerHandContainer.addEventListener('drop', (e) => {
-  e.preventDefault();
-  if (!draggedItem) return;
-
-  if (playerHandContainer.children.length >= 5) {
-    alert("Ta main est pleine !");
-    return;
-  }
-
-  playerHandContainer.appendChild(draggedItem);
-  draggedItem = null;
-});
-
-//  l'affichage
+// Affichage initial
 window.addEventListener("DOMContentLoaded", () => {
   afficherDeckDansJeu();
 });
 
-
-
-//mn main l9a3A 
-const joueur = document.querySelector(".joueur");
-const adversaire = document.querySelector(".adversaire");
- draggedItem = null;
-
-// dragstart  les cartes
-document.addEventListener('dragstart', (e) => {
-  draggedItem = e.target;
+// Gestion du drop dans la main du joueur
+playerHandContainer.addEventListener("dragover", e => {
+  e.preventDefault(); // obligatoire pour autoriser le drop
 });
 
-// dragover : on permet le drop
-joueur.addEventListener('dragover', (e) => {
+playerHandContainer.addEventListener("drop", e => { 
   e.preventDefault();
-});
-
-// drop
-joueur.addEventListener('drop', (e) => {
-  e.preventDefault();
-  if (!draggedItem) return;
-
-  if (joueur.children.length >= 5) {
-    alert("Ta main est pleine !");
-    draggedItem = null;
+  if (draggedItem && playerHandContainer.children.length >=5 ) {
+     alert("ta main et pleine  !");
     return;
   }
 
-  // ykhtaar ina no3 bra yl3Ab beeeeeeeb
-  let type = prompt("attaque ou défense ?", "Entrez le type ici : ");
-  if (type === "attaque") {
-    draggedItem.classList.remove("defense");
-    draggedItem.classList.add("attaque");
-  } else if (type === "défense") {
-    draggedItem.classList.remove("attaque");
-    draggedItem.classList.add("defense");
-  } else {
-    alert("Vous devez choisir attaque ou défense !");
-    draggedItem = null;
+   playerHandContainer.appendChild(draggedItem);
+    console.log("la carte a était ajouter");
+});
+
+
+
+// Gestion du drop dans la main du joueur
+deckJoueur.addEventListener("dragover", e => {
+  e.preventDefault(); // obligatoire pour autoriser le drop
+});
+
+deckJoueur.addEventListener("drop", e => { 
+  e.preventDefault();
+  if (draggedItem && deckJoueur.children.length >=5 ) {
+     alert("impossible  !");
     return;
   }
 
-  joueur.appendChild(draggedItem);
-  draggedItem = null;
+   deckJoueur.appendChild(draggedItem);
+    console.log("la carte a était ajouter");
 });
 
-// affichage du deck
-window.addEventListener("DOMContentLoaded", () => {
-  afficherDeckDansJeu();
-});
