@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -13,6 +13,9 @@
       background-size: cover;
       background-position: center;
       min-height: 100vh;
+    }
+    #attaqueDefense{
+      display:none;
     }
   </style>
 </head>
@@ -50,26 +53,38 @@
       <div id="cartesAdversaire" class="flex flex-wrap gap-2"></div>
     </div>
 
+
     <!-- Champ de Bataille    fi wst  -->
     <div id="BatailleJoueur"
       class="border border-gray-700 rounded-lg p-3 bg-gray-800 grid grid-rows-4 grid-cols-5 gap-2 ">
-        
-        <div class="absolute gap-4">
-          <!-- Zone adversaire -->
-          <div class="adversaire flex flex-row border border-solid-[#ccc] h-[180px] w-[50rem]  ml-20 "> </div>
-          <!-- Zone joueur -->
-          <div class="deckJoueur flex flex-row border border-solid-[#ccc] h-[180px]  w-[50rem] ml-20 "> </div>
-        </div>
-    
+
+      <div class="absolute gap-4">
+        <!-- Zone adversaire -->
+        <div class="adversaire flex flex-row border border-solid-[#ccc] h-[180px] w-[50rem]  ml-20 "> </div>
+        <!-- Zone joueur -->
+        <div class="deckJoueur flex flex-row border border-solid-[#ccc] h-[180px]  w-[50rem] ml-20 "> </div>
+      </div>
+
     </div>
     <!-- Main du joueur (bas droite) -->
     <div id="mainZone" class="border border-gray-700 rounded-lg p-3 bg-gray-800 col-span-1">
- 
+
       <div id="cartesMain" class="flex flex-wrap gap-2 min-h-[120px]"></div>
     </div>
+        <!--attaque et défense-->
+      <div id="attaqueDefense" class="bg-white w-[25%] h-[30%] flex flex-col items-center absolute ml-[35rem] mt-[15rem] rounded-xl">
+    <button class=" FermerButton flex bg-red-700 border rounded-xl p-3 ml-80">X</button>
+    <p class="text-black text-bolde ml-[7.5rem] mt-3 ">choisir mode:</p>
+    <div class="flex gap-40 mt-20 ml-8">
+      <button id="ButtonAttaque" class="bg-red-500  rounded-xl p-3">attaque</button>
+      <button id="ButtonDefense" class="e bg-blue-500  rounded-xl p-3 ">défense</button>
+    </div>
+  </div>
+
 
   </main>
 
+
 </body>
 
-</html> 
+</html>

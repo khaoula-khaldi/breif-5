@@ -33,20 +33,15 @@ function affichageHtml(carte) {
     afficherDeck();       // mettre à jour le deck dans Mon Deck
   });
 
-
-
   return div;
 }
 function achat(carte) {
-  // Récupérer les cartes achetées depuis le localStorage (ou tableau vide si rien)
+  // Récupérer les cartes achetées depuis le localStorage 
   let cartesAchetees = JSON.parse(localStorage.getItem("cartesAchetees")) || [];
-
   // Ajouter la carte achetée
   cartesAchetees.push(carte);
-
   // Sauvegarder dans le localStorage
   localStorage.setItem("cartesAchetees", JSON.stringify(cartesAchetees));
-
   console.log(`Carte achetée : ${carte.nom}`);
 }
 
@@ -54,11 +49,8 @@ function achat(carte) {
 function afficherDeck() {
   const deckContainer = document.getElementById("deckContainer");
   if (!deckContainer) return; // si on est pas sur la page deck
-
   deckContainer.innerHTML = ""; // vider avant d’afficher
-
   let cartesAchetees = JSON.parse(localStorage.getItem("cartesAchetees")) || [];
-
   cartesAchetees.forEach(carte => {
     const div = document.createElement("div");
     div.className = "w-[200px] bg-gray-700 text-white rounded p-2 m-2";
@@ -208,7 +200,7 @@ async function FetchCarte() {
 
 
   catch (error) {
-    console.error(error);
+    console.log("error");
   }
 }
 FetchCarte()
@@ -221,9 +213,28 @@ FetchCarte()
 // Sélectionner les zones
 const playerHandContainer = document.getElementById("cartesMain");
 const deckContainer = document.getElementById("cartesDeck");
-const deckJoueur =document.querySelector(".deckJoueur")
+const deckJoueur = document.querySelector(".deckJoueur")
 
 let draggedItem = null;
+
+// // Tour
+// let tourActuel = "joueur"; // joueur commence
+
+// // ========================= AFFICHAGE DU TOUR =========================
+// function majTourText() {
+//   const tourText = document.getElementById("tourActuelText");
+//   if (tourText) {
+//     tourText.textContent = tourActuel === "joueur" ? "Tour du joueur" : "Tour de l’adversaire";
+//   }
+// }
+
+// // Changer de tour
+// function changerTour() {
+//   tourActuel = tourActuel === "joueur" ? "adversaire" : "joueur";
+//   majTourText();
+//   console.log("Tour actuel :", tourActuel);
+// }
+
 
 // Fonction pour afficher les cartes du deck dans la zone deck
 function afficherDeckDansJeu() {
@@ -243,8 +254,6 @@ function afficherDeckDansJeu() {
     deckContainer.appendChild(cardDiv);
   });
 
-
-
   // drag sur chque carte
   const cartesDeck = document.querySelectorAll(".carteDeck");
   cartesDeck.forEach(carte => {
@@ -252,6 +261,7 @@ function afficherDeckDansJeu() {
       draggedItem = carte;
       carte.classList.add("dragging");
       console.log("drag start");
+
     });
 
     carte.addEventListener("dragend", e => {
@@ -260,8 +270,9 @@ function afficherDeckDansJeu() {
       console.log("drag end");
     });
   });
-    // drag sur chque carte dans main
-  const cartesMain = document.getElementById("cartesMain");
+
+  // drag sur chque carte dans main
+  const cartesMain = document.querySelectorAll("cartesMain");
   cartesMain.forEach(carte => {
     carte.addEventListener("dragstart", e => {
       draggedItem = carte;
@@ -283,37 +294,85 @@ window.addEventListener("DOMContentLoaded", () => {
   afficherDeckDansJeu();
 });
 
-// Gestion du drop dans la main du joueur
+// Gestion du drop dans la main du joueur***********************************************
+
 playerHandContainer.addEventListener("dragover", e => {
-  e.preventDefault(); // obligatoire pour autoriser le drop
+  console.log("test drag");
+  const draggable = document.querySelector(".dragging");
+
+  console.log(draggable)
+  playerHandContainer.appendChild(draggable)
 });
 
-playerHandContainer.addEventListener("drop", e => { 
-  e.preventDefault();
-  if (draggedItem && playerHandContainer.children.length >=5 ) {
-     alert("ta main et pleine  !");
-    return;
-  }
-
-   playerHandContainer.appendChild(draggedItem);
-    console.log("la carte a était ajouter");
+playerHandContainer.addEventListener("drop", e => {
+  console.log("test drop"); 
+  
+  playerHandContainer.appendChild(draggedItem);
+  console.log("la carte a était ajouter");
 });
 
 
 
-// Gestion du drop dans la main du joueur
+// Gestion du drop dans la champ de bataille******************************************
 deckJoueur.addEventListener("dragover", e => {
-  e.preventDefault(); // obligatoire pour autoriser le drop
+  console.log("test drag");
+  const draggable = document.querySelector(".dragging");
+
+  console.log(draggable)
+  deckJoueur.appendChild(draggable)
 });
 
-deckJoueur.addEventListener("drop", e => { 
-  e.preventDefault();
-  if (draggedItem && deckJoueur.children.length >=5 ) {
-     alert("impossible  !");
-    return;
+deckJoueur.addEventListener("drop", e => {
+  console.log("test drop"); 
+
+  deckJoueur.appendChild(draggedItem);
+  console.log("la carte a était ajouter");
+});
+
+
+// drop selon le choix 
+const ButtonAttaque = document.getElementById("ButtonAttaque");
+const ButtonDefense = document.getElementById("ButtonDefense");
+const FermerButton = document.querySelector(".FermerButton");
+
+
+//fct de verifiqation $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+function verification() {
+  if (attaqueDefense.style.display === 'none') {
+    attaqueDefense.style.display = 'block';
   }
 
-   deckJoueur.appendChild(draggedItem);
-    console.log("la carte a était ajouter");
-});
+  // yhayeeed dek section
+  FermerButton("click", e => {
+    attaqueDefense.style.display = 'none';
+  })
 
+  // Vérifie 
+  if (e.target.ButtonAttaque === "ButtonAttaque") {
+    ButtonAttaque.style.border = 'red';
+    attaqueDefense.style.display = 'none';
+  }
+  // Vérifie 
+  if (e.target.ButtonDefense === "ButtonDefense") {
+    ButtonDefense.style.border = 'blue';
+    attaqueDefense.style.display = 'none';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const adversaire = document.querySelector(".adversaire");
+// adversaire = JSON.parse(localStorage.getItem("adversaire")) || [];
+// cartesAchetees=Adversaire;
+// console.log('Adversaire');
