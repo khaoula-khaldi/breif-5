@@ -36,7 +36,7 @@ function affichageHtml(carte) {
   return div;
 }
 function achat(carte) {
-  // Récupérer les cartes achetées depuis le localStorage 
+  //  les cartes achetées dans le localStorage 
   let cartesAchetees = JSON.parse(localStorage.getItem("cartesAchetees")) || [];
   // Ajouter la carte achetée
   cartesAchetees.push(carte);
@@ -205,42 +205,19 @@ async function FetchCarte() {
 }
 FetchCarte()
 
-
-
-
-// //les zones===============================================================================================================================================
-
-// Sélectionner les zones
+// ======================================
+// Les zones
 const playerHandContainer = document.getElementById("cartesMain");
 const deckContainer = document.getElementById("cartesDeck");
-const deckJoueur = document.querySelector(".deckJoueur")
-
-let draggedItem = null;
-
-// // Tour
-// let tourActuel = "joueur"; // joueur commence
-
-// // ========================= AFFICHAGE DU TOUR =========================
-// function majTourText() {
-//   const tourText = document.getElementById("tourActuelText");
-//   if (tourText) {
-//     tourText.textContent = tourActuel === "joueur" ? "Tour du joueur" : "Tour de l’adversaire";
-//   }
-// }
-
-// // Changer de tour
-// function changerTour() {
-//   tourActuel = tourActuel === "joueur" ? "adversaire" : "joueur";
-//   majTourText();
-//   console.log("Tour actuel :", tourActuel);
-// }
-
-
-// Fonction pour afficher les cartes du deck dans la zone deck
+const deckJoueur = document.querySelector(".deckJoueur");
+const attaqueDefense = document.getElementById("attaqueDefense");
+const ButtonAttaque = document.getElementById("ButtonAttaque");
+const ButtonDefense = document.getElementById("ButtonDefense");
+const FermerButton = document.getElementById("FermerButton");
+// Affichage du deck======================================================================================================================
 function afficherDeckDansJeu() {
   const cartesAchetees = JSON.parse(localStorage.getItem("cartesAchetees")) || [];
-  deckContainer.innerHTML = ""; // khweeeeeeeeeeee fi lwel
-
+  deckContainer.innerHTML = ""; 
   cartesAchetees.forEach(carte => {
     const cardDiv = document.createElement("div");
     cardDiv.className = "carteDeck w-[150px] h-[150px] bg-gray-700 text-white rounded p-2 m-2";
@@ -252,127 +229,91 @@ function afficherDeckDansJeu() {
       <p class="text-xs">${carte.rare}</p>
     `;
     deckContainer.appendChild(cardDiv);
-  });
-
-  // drag sur chque carte
-  const cartesDeck = document.querySelectorAll(".carteDeck");
-  cartesDeck.forEach(carte => {
-    carte.addEventListener("dragstart", e => {
-      draggedItem = carte;
-      carte.classList.add("dragging");
-      console.log("drag start");
-
-    });
-
-    carte.addEventListener("dragend", e => {
-      carte.classList.remove("dragging");
-      draggedItem = null;
-      console.log("drag end");
-    });
-  });
-
-  // drag sur chque carte dans main
-  const cartesMain = document.querySelectorAll("cartesMain");
-  cartesMain.forEach(carte => {
-    carte.addEventListener("dragstart", e => {
-      draggedItem = carte;
-      carte.classList.add("dragging");
-      console.log("drag start");
-    });
-
-    carte.addEventListener("dragend", e => {
-      carte.classList.remove("dragging");
-      draggedItem = null;
-      console.log("drag end");
-    });
-  });
-
+  }); 
 }
-
-// Affichage initial
+// affichage initail
 window.addEventListener("DOMContentLoaded", () => {
   afficherDeckDansJeu();
 });
+// drag et drop======================================
 
-// Gestion du drop dans la main du joueur***********************************************
+let draggedItem = null;
+let selectedCard = null;
+const MAX_MAIN = 5;
+const MAX_BATAILLE = 5;
 
-playerHandContainer.addEventListener("dragover", e => {
-  console.log("test drag");
-  const draggable = document.querySelector(".dragging");
-
-  console.log(draggable)
-  playerHandContainer.appendChild(draggable)
-});
-
-playerHandContainer.addEventListener("drop", e => {
-  console.log("test drop"); 
-  
-  playerHandContainer.appendChild(draggedItem);
-  console.log("la carte a était ajouter");
-});
-
-
-
-// Gestion du drop dans la champ de bataille******************************************
-deckJoueur.addEventListener("dragover", e => {
-  console.log("test drag");
-  const draggable = document.querySelector(".dragging");
-
-  console.log(draggable)
-  deckJoueur.appendChild(draggable)
-});
-
-deckJoueur.addEventListener("drop", e => {
-  console.log("test drop"); 
-
-  deckJoueur.appendChild(draggedItem);
-  console.log("la carte a était ajouter");
-});
-
-
-// drop selon le choix 
-const ButtonAttaque = document.getElementById("ButtonAttaque");
-const ButtonDefense = document.getElementById("ButtonDefense");
-const FermerButton = document.querySelector(".FermerButton");
-
-
-//fct de verifiqation $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-function verification() {
-  if (attaqueDefense.style.display === 'none') {
-    attaqueDefense.style.display = 'block';
+document.addEventListener("dragstart", e => {
+  if (e.target.classList.contains("carteDeck")) {
+    draggedItem = e.target;
+    e.target.classList.add("dragging");
   }
+});
 
-  // yhayeeed dek section
-  FermerButton("click", e => {
-    attaqueDefense.style.display = 'none';
-  })
-
-  // Vérifie 
-  if (e.target.ButtonAttaque === "ButtonAttaque") {
-    ButtonAttaque.style.border = 'red';
-    attaqueDefense.style.display = 'none';
+document.addEventListener("dragend", e => {
+  if (e.target.classList.contains("carteDeck")) {
+    e.target.classList.remove("dragging");
+    draggedItem = null;
   }
-  // Vérifie 
-  if (e.target.ButtonDefense === "ButtonDefense") {
-    ButtonDefense.style.border = 'blue';
+});
+
+// Zones de drop*********************************************
+[playerHandContainer, deckJoueur].forEach(zone => {
+  zone.addEventListener("dragover", e => e.preventDefault());
+  zone.addEventListener("drop", e => {
+    e.preventDefault();
+    if (!draggedItem) return;
+
+    // Limites
+    if (zone === playerHandContainer && playerHandContainer.children.length >= MAX_MAIN) {
+      alert(`Tu ne peux avoir que ${MAX_MAIN} cartes à la main !`);
+      return;
+    }
+
+    if (zone === deckJoueur && deckJoueur.children.length >= MAX_BATAILLE) {
+      alert(`Tu ne peux mettre que ${MAX_BATAILLE} cartes sur le champ de bataille !`);
+      return;
+    }
+
+    zone.appendChild(draggedItem);
+
+    // Si c'est le champ de bataille, afficher choix attaque/défense
+    if (zone === deckJoueur) {
+      selectedCard = draggedItem;
+      attaqueDefense.style.display = 'block';
+      ButtonAttaque.disabled = false;
+      ButtonDefense.disabled = false;
+    }
+  });
+});
+
+// ======================================
+// Boutons attaque/défense
+// ======================================
+ButtonAttaque.addEventListener("click", () => {
+  if (selectedCard) {
+    selectedCard.style.border = "3px solid red";
     attaqueDefense.style.display = 'none';
+    ButtonAttaque.disabled = true;
+    ButtonDefense.disabled = true;
+    selectedCard = null;
   }
-}
+});
+
+ButtonDefense.addEventListener("click", () => {
+  if (selectedCard) {
+    selectedCard.style.border = "3px solid blue";
+    attaqueDefense.style.display = 'none';
+    ButtonAttaque.disabled = true;
+    ButtonDefense.disabled = true;
+    selectedCard = null;
+  }
+});
+
+FermerButton.addEventListener("click", () => {
+  attaqueDefense.style.display = 'none';
+  ButtonAttaque.disabled = true;
+  ButtonDefense.disabled = true;
+  selectedCard = null;
+});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// const adversaire = document.querySelector(".adversaire");
-// adversaire = JSON.parse(localStorage.getItem("adversaire")) || [];
-// cartesAchetees=Adversaire;
-// console.log('Adversaire');

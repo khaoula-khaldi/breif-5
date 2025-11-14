@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jeu de Cartes</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/script.js" defer></script>
+  <!-- <script src="/script.js" defer></script> -->
   <style>
     body {
       background-image: url('img/jeu.png');
@@ -14,8 +14,9 @@
       background-position: center;
       min-height: 100vh;
     }
-    #attaqueDefense{
-      display:none;
+
+    #attaqueDefense {
+      display: none;
     }
   </style>
 </head>
@@ -45,6 +46,7 @@
       <h2 class="text-lg font-semibold mb-2">Zone de Deck</h2>
       <div id="cartesDeck" class="grid grid-cols-1 overflow-y-auto gap-2 h-[95%] ml-20"></div>
       <p class="mt-2 text-sm">Nombre de cartes : <span id="nbr-Cards">0</span></p>
+      <button id="changeTour" class="bg-green-500 text-white rounded-lg px-4 py-2  top-5 right-5 shadow-md hover:bg-green-600">Ton tour</button>
     </div>
 
     <!-- Zone Adversaire (fooo9) -->
@@ -71,20 +73,21 @@
 
       <div id="cartesMain" class="flex flex-wrap gap-2 min-h-[120px]"></div>
     </div>
-        <!--attaque et défense-->
-      <div id="attaqueDefense" class="bg-white w-[25%] h-[30%] flex flex-col items-center absolute ml-[35rem] mt-[15rem] rounded-xl">
-    <button class=" FermerButton flex bg-red-700 border rounded-xl p-3 ml-80">X</button>
-    <p class="text-black text-bolde ml-[7.5rem] mt-3 ">choisir mode:</p>
-    <div class="flex gap-40 mt-20 ml-8">
-      <button id="ButtonAttaque" class="bg-red-500  rounded-xl p-3">attaque</button>
-      <button id="ButtonDefense" class="e bg-blue-500  rounded-xl p-3 ">défense</button>
+    <!--attaque et défense-->
+    <div id="attaqueDefense"
+      class="bg-white w-[25%] h-[30%] flex flex-col items-center absolute ml-[35rem] mt-[15rem] rounded-xl">
+      <button id="FermerButton" class="  flex bg-red-700 border rounded-xl p-3 ml-80">X</button>
+      <p class="text-black text-bolde ml-[7.5rem] mt-3 ">choisir mode:</p>
+      <div class="flex gap-40 mt-20 ml-8">
+        <button id="ButtonAttaque" class="bg-red-500  rounded-xl p-3" disabled>attaque</button>
+        <button id="ButtonDefense" class="e bg-blue-500  rounded-xl p-3 " disabled>défense</button>
+      </div>
     </div>
-  </div>
-
+    
 
   </main>
 
-
+  <script src="/script.js" defer></script>
 </body>
 
 </html>
