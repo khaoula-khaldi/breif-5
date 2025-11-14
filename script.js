@@ -316,4 +316,10 @@ FermerButton.addEventListener("click", () => {
   selectedCard = null;
 });
 
-
+const changeTour = document.getElementById("changeTour");
+changeTour.addEventListener('click',e=>{
+  fctTour();
+})
+function fctTour (){
+  
+}
